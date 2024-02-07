@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Home page {% endblock %}
+{% block title %} Home Page {% endblock %}
 
 {% block content %}
 <!DOCTYPE html>
@@ -28,17 +28,16 @@
             padding: 1em;
         }
 
-        h1, h2 {
+        h3 {
             color: #61dafb;
         }
 
-        h3 {
-            line-height: 1.6;
+        h1, h2 {
             color: #FF1493;
         }
 
         p, li, tr {
-            line-height: 1.6;
+            line-height: 1.2;
             color: #a4acc4;
         }
     
@@ -57,7 +56,7 @@
         }
 
         a:hover {
-            border-bottom: 2px solid #FF6347;
+            border-bottom: 1px solid #FF6347;
         }
 
 
@@ -74,31 +73,47 @@
 </head>
 <body>
     <section>
-        <h1>To Do List</h1>
-        <ul>
-            {% for task in tasks %}
-                <li>
-                    {% if task.completed %}
-                        <del>{{ task.name }}</del>
-                    {% else %}
-                        {{ task.name }}
-                    {% endif %}
-                    - <a href="{{ url_for('mark_completed', task_index=loop.index) }}">Mark Task Done</a>
-                    - <a href="{{ url_for('remove_task', task_index=loop.index) }}">Remove & Delete</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <form action="{{ url_for('add_task') }}" method="post">
-            <label for="task_name">New Task:</label>
-            <input 
-                type="text"     
-                id="task_name"  
-                name="task_name" required>
-                <button type="submit" class="btn-primary">Add Task<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+        <header> A To Do List App </header>
+        <section>
+            <h2>Put down your day to day to-do activities</h2>
+        </section>
+        <section>
+            <ol>
+                {% for task in tasks %}
+                    <li>
+                        {% if task.completed %}
+                            <del>{{ task.name }}</del>
+                        {% else %}
+                            {{ task.name }}
+                        {% endif %}
+                        - <a href="{{ url_for('mark_completed', task_index=loop.index) }}">Mark Task Done</a>
+                        - <a href="{{ url_for('remove_task', task_index=loop.index) }}">Remove & Delete</a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </section>
+        <section>
+            <form action="{{ url_for('add_task') }}" method="post">
+                <h3 align="center">New Task</h3>
+                <div class = "form-group">
+                    <label for="task_name", align="center"> </label>
+                    <input 
+                        type = "text"     
+                        class = "form-control"
+                        id = "task_name"  
+                        name = "task_name" required
+                        placeholder = "Write your to do task here..."
+                    />
+                </div>
+                <button type="submit" class="btn-primary">Add Task</button>
             </form>
-    </section>
+        </section>
 
+            <footer>
+                <p>&copy;2024 Dev_aladinh production.</p>
+            </footer>
+
+    </section>
 </body>
 </html>
-
 {% endblock %}
