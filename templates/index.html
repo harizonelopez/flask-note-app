@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %} Home page {% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+
+    <style>
+        body {
+          display: flex;
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #282c35;
+          color: #fff;
+          align-items: center;
+          flex-direction: column;
+          text-align: left;
+          }
+
+        header {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 1em;
+        }
+
+        h1, h2 {
+            color: #61dafb;
+        }
+
+        h3 {
+            line-height: 1.6;
+            color: #FF1493;
+        }
+
+        p, li, tr {
+            line-height: 1.6;
+            color: #a4acc4;
+        }
+    
+        section {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #373c49;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        a {
+            color: #00FF00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            border-bottom: 2px solid #FF6347;
+        }
+
+
+        footer {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 0em 0;
+            position: fixed;
+            bottom: 0;
+            width: 65%;
+        }
+    
+      </style>
+</head>
+<body>
+    <section>
+        <h1>To Do List</h1>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    {% if task.completed %}
+                        <del>{{ task.name }}</del>
+                    {% else %}
+                        {{ task.name }}
+                    {% endif %}
+                    - <a href="{{ url_for('mark_completed', task_index=loop.index) }}">Mark Task Done</a>
+                    - <a href="{{ url_for('remove_task', task_index=loop.index) }}">Remove & Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('add_task') }}" method="post">
+            <label for="task_name">New Task:</label>
+            <input 
+                type="text"     
+                id="task_name"  
+                name="task_name" required>
+                <button type="submit" class="btn-primary">Add Task<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            </form>
+    </section>
+
+</body>
+</html>
+
+{% endblock %}
