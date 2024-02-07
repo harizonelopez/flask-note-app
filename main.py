@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 
@@ -45,7 +45,7 @@ class ToDoList:
                     task.completed = bool(completed)
                     self.tasks.append(task)
         except FileNotFoundError:
-            print("File not found.")
+            print("ERROR!!, File not found.")
             pass
         
 todo_list = ToDoList()
@@ -53,6 +53,13 @@ todo_list = ToDoList()
 @app.route('/')
 def index():
     return render_template('index.html', tasks = todo_list.tasks)
+
+@app.route('/contact', methods = ['POST', 'GET'])
+def contact():
+    if request.method == 'POST':
+        return render_template('index.html')
+        
+    return render_template('contact.html')
 
 @app.route('/add_task', methods = ['POST'])
 def add_task():
