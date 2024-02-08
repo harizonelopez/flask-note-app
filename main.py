@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -54,14 +54,14 @@ todo_list = ToDoList()
 def index():
     return render_template('index.html', tasks = todo_list.tasks)
 
-@app.route('/reference', methods = ['POST', 'GET'])
+@app.route('/reference', methods = ['POST'])
 def reference():
     if request.method == 'POST':
         return render_template('index.html')
     
     return render_template('reference.html')
 
-@app.route('/contact', methods = ['POST', 'GET'])
+@app.route('/contact', methods = ['POST'])
 def contact():
     if request.method == 'POST':
         return render_template('index.html')
