@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
+app.secret_key = "aladinh00-01montext"
 
 class Task:
     def __init__(self, name):
@@ -54,21 +55,21 @@ todo_list = ToDoList()
 def index():
     return render_template('index.html', tasks = todo_list.tasks)
 
-@app.route('/reference', methods = ['POST'])
+@app.route('/reference', methods = ['GET', 'POST'])
 def reference():
     if request.method == 'POST':
         return render_template('index.html')
     
     return render_template('reference.html')
 
-@app.route('/contact', methods = ['POST'])
+@app.route('/contact', methods = ['GET', 'POST'])
 def contact():
     if request.method == 'POST':
         return render_template('index.html')
         
     return render_template('contact.html')
 
-@app.route('/add_task', methods = ['POST'])
+@app.route('/add_task', methods = ['GET', 'POST'])
 def add_task():
     task_name = request.form.get('task_name')
     todo_list.add_task(Task(task_name))
