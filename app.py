@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
-app.secret_key = 'aladinh00-01montext'
 
 class Task:
     def __init__(self, name):
@@ -21,7 +20,7 @@ class ToDoList:
 
     def display_tasks(self):
         for i, task in enumerate(self.tasks, start=1):
-            status = " [X] " if task.completed else " [ ] "
+            status = "[X]" if task.completed else "[ ]"
             print(f"{i}.{status}{task.name}")
 
     def mark_completed(self, task_index):
@@ -46,7 +45,7 @@ class ToDoList:
                     task.completed = bool(completed)
                     self.tasks.append(task)
         except FileNotFoundError:
-            print("ERROR!!, File not found.")
+            print("ERROR!!!, File not found in the database.")
             pass
         
 todo_list = ToDoList()
@@ -55,21 +54,21 @@ todo_list = ToDoList()
 def index():
     return render_template('index.html', tasks = todo_list.tasks)
 
-@app.route('/reference', methods = ['GET', 'POST'])
+@app.route('/reference', methods=['POST'])
 def reference():
     if request.method == 'POST':
         return redirect(url_for('index'))
     
     return render_template("reference.html")
 
-@app.route('/contact', methods = ['GET', 'POST'])
+@app.route('/contact', methods=['POST'])
 def contact():
     if request.method == 'POST':
         return redirect(url_for('index'))
         
     return render_template("contact.html")
 
-@app.route('/add_task', methods = ['GET', 'POST'])
+@app.route('/add_task')
 def add_task():
     task_name = request.form.get('task_name')
     todo_list.add_task(Task(task_name))
@@ -80,7 +79,7 @@ def add_task():
 def mark_completed(task_index):
     todo_list.mark_completed(task_index)
     
-    return redirect(url_for('index'))
+    return redirect(url_for('index))
 
 @app.route('/remove_task/<int:task_index>')
 def remove_task(task_index):
@@ -88,5 +87,5 @@ def remove_task(task_index):
     
     return redirect(url_for('index'))
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app.run(debug=True)
